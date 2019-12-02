@@ -103,8 +103,9 @@ int main()
         if (StringTools::startsWith(message->text, "/start")) {
             return;
         }
-        unsigned char user_input=1, send_msp430;
-        user_input = message->text.c_str();
+        unsigned char send_msp430;
+        const unsigned char* user_input = reinterpret_cast<const unsigned char *>( message->text.c_str() );
+        // user_input = message->text.c_str();
         if((user_input<0) || (user_input>5))
 			puts("Valor invalido");
 		else if(user_input>0)
