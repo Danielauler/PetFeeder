@@ -104,7 +104,7 @@ int main()
             return;
         }
         unsigned char user_input=1, send_msp430;
-        string userMessage = message->text
+        string userMessage = message.text
         &user_input = userMessage;
         if((user_input<0) || (user_input>5))
 			puts("Valor invalido");
