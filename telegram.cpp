@@ -106,9 +106,9 @@ int main()
         unsigned char send_msp430;
         const unsigned char* user_input = reinterpret_cast<const unsigned char *>( message->text.c_str() );
         // user_input = message->text.c_str();
-        if((user_input<0) || (user_input>5))
+        if((strcmp(user_input,"0")==0) || (strcmp(user_input,"5")==0))
 			puts("Valor invalido");
-		else if(user_input>0)
+		else 
 		{
 			send_msp430 = user_input;
 			wiringPiSPIDataRW(0, &send_msp430, 1);
