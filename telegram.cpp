@@ -38,7 +38,6 @@ void feederFunction(int delayTime, int N)
 
 int main()
 {
-    unsigned char user_input=1, send_msp430;
     int N = 40;
     if(wiringPiSetup() == -1)
 	{
@@ -104,6 +103,7 @@ int main()
         if (StringTools::startsWith(message->text, "/start")) {
             return;
         }
+        unsigned char user_input=1, send_msp430;
         user_input = message->text;
         if((user_input<0) || (user_input>5))
 			puts("Valor invalido");
