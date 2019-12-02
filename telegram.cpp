@@ -104,7 +104,7 @@ int main()
             return;
         }
         unsigned char user_input=1, send_msp430;
-        user_input = message->text;
+        strncpy(user_input, message->text, sizeof(user_input)); ;
         if((user_input<0) || (user_input>5))
 			puts("Valor invalido");
 		else if(user_input>0)
