@@ -38,36 +38,13 @@ bool verifyBowl(string photoFilePath)
     return haveFood;
 }
 
-void sqwv(int pin, int degree, int N)
-{
-    int t1 = (100 * degree + 4) / 9 + 1500;
-    int t2 = 20000 - t1;
-    int i;
-    for (i = 0; i < N; i++)
-    {
-        digitalWrite(pin, HIGH);
-        usleep(t1);
-        digitalWrite(pin, LOW);
-        usleep(t2);
-    }
-}
-
-void feederFunction(int delayTime, int N)
-{
-    cout << "Alimentando" << endl;
-    sqwv(SERVO, -90, N);
-    sleep(delayTime);
-    sqwv(SERVO, 0, N);
-};
-
 int main()
 {
     const string photoFilePath = "foto_img.jpg";
     const string photoMimeType = "image/jpeg";
     int N = 40;
     wiringPiSetup();
-    pinMode(SERVO, OUTPUT);
-    sqwv(SERVO, 0, N);
+
     Bot bot("792286575:AAFZp72JW32M5o7vOafWiOnqqjdN7ca2BIA");
 
     InlineKeyboardMarkup::Ptr keyboard(new InlineKeyboardMarkup);
@@ -76,8 +53,7 @@ int main()
     InlineKeyboardButton::Ptr checkButton(new InlineKeyboardButton);
     InlineKeyboardButton::Ptr checkButton2(new InlineKeyboardButton);
     InlineKeyboardButton::Ptr checkButton3(new InlineKeyboardButton);
-    InlineKeyboardButton::Ptr checkButton4(new InlineKeyboardButton);
-    InlineKeyboardButton::Ptr checkButton5(new InlineKeyboardButton);
+
     vector<InlineKeyboardButton::Ptr> row1;
     vector<InlineKeyboardButton::Ptr> row2;
 
@@ -95,15 +71,6 @@ int main()
     row2.push_back(checkButton3);
     keyboard->inlineKeyboard.push_back(row2);
 
-    checkButton4->text = "Cancelar";
-    checkButton4->callbackData = "cancelar";
-    row0.push_back(checkButton4);
-    keyboard2->inlineKeyboard.push_back(row0);
-
-    checkButton5->text = "Confirmar";
-    checkButton5->callbackData = "confirmado";
-    row0.push_back(checkButton5);
-    keyboard2->inlineKeyboard.push_back(row0);
 
     bot.getEvents().onCommand("start", [&bot](Message::Ptr message) {
         bot.getApi().sendMessage(message->chat->id, "Olá, vou te ajudar a manter seu pet alimentado. Use o comando /help para mais informações");
@@ -138,41 +105,25 @@ int main()
         }
     });
 
-    bot.getEvents().onCommand("agendar", [&bot, &keyboard2](Message::Ptr message) {
-        string response = "Vou alimentar seu pet todos os dias as 8h e as 20h. Deseja confirmar?";
-        bot.getApi().sendMessage(message->chat->id, response, false, 0, keyboard2, "Markdown");
-    });
-
-    bot.getEvents().onCallbackQuery([&bot](CallbackQuery::Ptr query) {
-        if (StringTools::startsWith(query->data, "confirmado"))
-        {
-            thread schedule(ScheduleFeed);
-            schedule.join();
-            string response = "Ok, agendado";
-            bot.getApi().sendMessage(query->message->chat->id, response);
+     bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
+        printf("User wrote %s\n", message->text.c_str());
+        if (StringTools::startsWith(message->text, "/start")) {
+            return;
         }
-    });
-    
-    bot.getEvents().onCallbackQuery([&bot](CallbackQuery::Ptr query) {
-        if (StringTools::startsWith(query->data, "semVerificarAlimentar"))
-        {
-            thread feeder(feederFunction, 2, 40);
-            feeder.join();
-            string response = "Ok, alimentado";
-            bot.getApi().sendMessage(query->message->chat->id, response);
-        }
-    });
-    
-    bot.getEvents().onCallbackQuery([&bot, &keyboard2](CallbackQuery::Ptr query) {
-        if (StringTools::startsWith(query->data, "agendar"))
-        {
-           string response = "Vou alimentar seu pet todos os dias as 8h e as 20h. Deseja confirmar?";
-        bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboard2, "Markdown");
-        }
-    });
-
-    bot.getEvents().onCommand("help", [&bot, &keyboard](Message::Ptr message) {
-        bot.getApi().sendMessage(message->chat->id, "Você pode: ", false, 0, keyboard, "Markdown");
+        unsigned char send_msp430;
+        const unsigned char* user_input = reinterpret_cast<const unsigned char *>( message->text.c_str() );
+        // user_input = message->text.c_str();
+        if((strcmp(user_input,"0")==0) || (strcmp(user_input,"5")==0))
+			puts("Valor invalido");
+		else 
+		{
+			send_msp430 = user_input;
+			wiringPiSPIDataRW(0, &send_msp430, 1);
+			printf("MSP430_return = %d\n", send_msp430);
+			sleep(1+user_input/2);
+		}
+		puts("");
+        bot.getApi().sendMessage(message->chat->id, "Your message is: " + message->text);
     });
 
     bot.getEvents().onCallbackQuery([&bot](CallbackQuery::Ptr query) {
