@@ -77,14 +77,14 @@ int main()
     });
 
     bot.getEvents().onCommand("semVerificarAlimentar", [&bot](Message::Ptr message) {
-        thread feeder(feederFunction, 2, 40);
-        feeder.join();
+        // thread feeder(feederFunction, 2, 40);
+        // feeder.join();
         bot.getApi().sendMessage(message->chat->id, "Alimentado");
     });
     
     bot.getEvents().onCommand("semVerificarAlimentar", [&bot](Message::Ptr message) {
-        thread feeder(feederFunction, 2, 40);
-        feeder.join();
+        // thread feeder(feederFunction, 2, 40);
+        // feeder.join();
         bot.getApi().sendMessage(message->chat->id, "Alimentado");
     });
 
@@ -94,8 +94,8 @@ int main()
         bool existencia = verifyBowl(photoFilePath);
         if (!existencia)
         {
-            thread feeder(feederFunction, 2, 40);
-            feeder.join();
+            // thread feeder(feederFunction, 2, 40);
+            // feeder.join();
             string response = "Ok, alimentado";
             bot.getApi().sendMessage(message->chat->id, response);
         }
@@ -135,8 +135,8 @@ int main()
             bool existencia = verifyBowl(photoFilePath);
             if (!existencia)
             {
-                thread feeder(feederFunction, 2, 40);
-                feeder.join();
+                // thread feeder(feederFunction, 2, 40);
+                // feeder.join();
                 string response = "Ok, alimentado";
                 bot.getApi().sendMessage(query->message->chat->id, response);
             }
