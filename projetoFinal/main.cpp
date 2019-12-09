@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <tgbot/tgbot.h>
 #include <unistd.h>
-#include <wiringPi.h>
+#include <wiringPiSPI.h>
 #include "scanBowl.h"
 
 #define SERVO 1
