@@ -15,6 +15,8 @@
 using namespace std;
 using namespace TgBot;
 
+int spi_fd;
+
 void takePic()
 {
     cout << "Tirando foto" << endl;
