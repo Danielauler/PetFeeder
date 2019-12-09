@@ -111,7 +111,7 @@ int main()
             return;
         }
         unsigned char send_msp430;
-        const char* user_input = reinterpret_cast<const char *>( message->text.c_str() );
+        auto user_input = reinterpret_cast<unsigned char*>(const_cast<char*>(message->text.c_str()));
         // user_input = message->text.c_str();
         if((strcmp(user_input,"0")==0) || (strcmp(user_input,"5")==0))
 			puts("Valor invalido");
