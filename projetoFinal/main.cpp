@@ -40,6 +40,7 @@ bool verifyBowl(string photoFilePath)
 
 int main()
 {
+    unsigned char user_input=1, send_msp430;
     const string photoFilePath = "foto_img.jpg";
     const string photoMimeType = "image/jpeg";
     int N = 40;
@@ -111,8 +112,8 @@ int main()
             return;
         }
         unsigned char send_msp430;
-        const unsigned char* user_input = reinterpret_cast<const unsigned char *>(message->text.c_str());
-        // user_input = message->text.c_str();
+        // const unsigned char* user_input = reinterpret_cast<const unsigned char *>(message->text.c_str());
+        user_input = StringTools::data(message->text.c_str());
         if((strcmp(user_input,"0")==0) || (strcmp(user_input,"5")==0))
 			puts("Valor invalido");
 		else 
