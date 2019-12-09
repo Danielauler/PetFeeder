@@ -125,9 +125,9 @@ int main()
         const unsigned char * user_input;
         // const unsigned char* user_input = reinterpret_cast<const unsigned char *>(message->text.c_str());
         user_input = reinterpret_cast<const unsigned char *> (message->text.c_str());
-        if ((user_input < '0') || (user_input > '5'))
+        if ((user_input < "0") || (user_input > "5"))
             puts("Valor invalido");
-        else if(user_input>'0')
+        else if(user_input>"0")
 		{
 			wiringPiSPIDataRW(0, &user_input, 1);
 			printf("MSP430_return = %d\n", user_input);
