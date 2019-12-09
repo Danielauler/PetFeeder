@@ -110,7 +110,7 @@ int main()
         if (StringTools::startsWith(message->text, "/start")) {
             return;
         }
-        unsigned char send_msp430;
+        const char* send_msp430;
         // const unsigned char* user_input = reinterpret_cast<const unsigned char *>(message->text.c_str());
         const char* user_input = message->text.c_str();
         if((strcmp(user_input,"0")==0) || (strcmp(user_input,"5")==0))
