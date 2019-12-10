@@ -56,7 +56,7 @@ int main()
         puts("esteja sendo usada por outra aplicacao.");
         return -1;
     }
-    Bot bot("792286575:AAFZp72JW32M5o7vOafWiOnqqjdN7ca2BIA");
+    Bot bot("792286575:AAG0puZ_3PvXAwh6ckXb5r4-cOfn56sgibU");
 
     InlineKeyboardMarkup::Ptr keyboard(new InlineKeyboardMarkup);
     InlineKeyboardMarkup::Ptr keyboard2(new InlineKeyboardMarkup);
@@ -115,26 +115,26 @@ int main()
         }
     });
 
-    // bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
-    //     printf("User wrote %s\n", message->text.c_str());
-    //     if (StringTools::startsWith(message->text, "/start"))
-    //     {
-    //         return;
-    //     }
-    //     unsigned char user_input;
-    //     // const unsigned char* user_input = reinterpret_cast<const unsigned char *>(message->text.c_str());
-    //     user_input = (unsigned char)atoi(message->text.c_str());
-    //     if ((atoi(message->text.c_str()) < 0) || (atoi(message->text.c_str()) > 5))
-    //         puts("Valor invalido");
-    //     else 
-	// 	{
-	// 		wiringPiSPIDataRW(0, &user_input, 1);
-	// 		printf("MSP430_return = %d\n", user_input);
-	// 		sleep(1+user_input/2);
-	// 	}
-	// 	puts("");
-    //     bot.getApi().sendMessage(message->chat->id, "Your message is: " + message->text);
-    // });
+    bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
+        printf("User wrote %s\n", message->text.c_str());
+        if (StringTools::startsWith(message->text, "/start"))
+        {
+            return;
+        }
+        unsigned char user_input;
+        // const unsigned char* user_input = reinterpret_cast<const unsigned char *>(message->text.c_str());
+        user_input = (unsigned char)atoi(message->text.c_str());
+        if ((atoi(message->text.c_str()) < 0) || (atoi(message->text.c_str()) > 5))
+            puts("Valor invalido");
+        else 
+		{
+			wiringPiSPIDataRW(0, &user_input, 1);
+			printf("MSP430_return = %d\n", user_input);
+			sleep(1+user_input/2);
+		}
+		puts("");
+        bot.getApi().sendMessage(message->chat->id, "Your message is: " + message->text);
+    });
 
     bot.getEvents().onCallbackQuery([&bot](CallbackQuery::Ptr query) {
         if (StringTools::startsWith(query->data, "alimentar"))
