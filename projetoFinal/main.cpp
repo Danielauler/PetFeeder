@@ -122,8 +122,9 @@ int main()
         {
             return;
         }
-         unsigned char * user_input;
-        user_input = reinterpret_cast< unsigned char *> (message->text.c_str());
+        const unsigned char * user_input;
+        // const unsigned char* user_input = reinterpret_cast<const unsigned char *>(message->text.c_str());
+        user_input = reinterpret_cast<const unsigned char *> (message->text.c_str());
         if ((strcmp(message->text.c_str(),"0")==0) || (strcmp(message->text.c_str(),"5")==0))
             puts("Valor invalido");
         else if(message->text.c_str()>"0")
