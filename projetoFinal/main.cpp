@@ -148,15 +148,15 @@ int main()
             unsigned char user_input;
             unsigned char value = query->data.back();
             cout<<"value selected is: "<<value<<endl;
-            user_input = (unsigned char)atoi(value);
+            // user_input = (unsigned char)atoi(value);
             if ((atoi(value) < 0) || (atoi(value) > 5))
                 puts("Valor invalido");
                 bot.getApi().sendMessage(query->message->chat->id, "Valor invalido");
             else
             {
-                wiringPiSPIDataRW(0, &user_input, 1);
-                printf("MSP430_return = %d\n", user_input);
-                sleep(1 + user_input / 2);
+                wiringPiSPIDataRW(0, &value, 1);
+                printf("MSP430_return = %d\n", value);
+                sleep(1 + value / 2);
             }
             puts("");
             bot.getApi().sendMessage(query->message->chat->id, "Ok, alimentado!");
