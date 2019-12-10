@@ -145,10 +145,8 @@ int main()
     bot.getEvents().onCallbackQuery([&bot](CallbackQuery::Ptr query) {
         if (StringTools::startsWith(query->data, "alimentar"))
         {
-            unsigned char user_input;
             unsigned char value = query->data.back();
             cout<<"value selected is: "<<value<<endl;
-            // user_input = (unsigned char)atoi(value);
             if ((value < 0) || (value > 5))
             {
                 puts("Valor invalido");
