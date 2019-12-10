@@ -150,8 +150,10 @@ int main()
             cout<<"value selected is: "<<value<<endl;
             // user_input = (unsigned char)atoi(value);
             if ((value < 0) || (value > 5))
+            {
                 puts("Valor invalido");
                 bot.getApi().sendMessage(query->message->chat->id, "Valor invalido");
+            }
             else
             {
                 wiringPiSPIDataRW(0, &value, 1);
