@@ -29,9 +29,9 @@ bool verifyBowl(string photoFilePath)
     cout << "Verificando tigela" << endl;
 
     bool haveFood;
-    // system("rm -rf foto_img.jpg")
-    // thread takePhoto(takePic);
-    // takePhoto.join();
+    system("rm -rf foto_img.jpg")
+    thread takePhoto(takePic);
+    takePhoto.join();
 
     char *tab2 = new char[photoFilePath.length() + 1];
     strcpy(tab2, photoFilePath.c_str());
@@ -47,7 +47,6 @@ int main()
     const string photoMimeType = "image/jpeg";
 
     unsigned char user_input;
-    unsigned char time_default;
 
     if (wiringPiSetup() == -1)
     {
@@ -107,7 +106,7 @@ int main()
         bool existencia = verifyBowl(photoFilePath);
         if (!existencia)
         {
-            time_default = (unsigned char)feed_default;
+            unsigned char time_default = 4;
             wiringPiSPIDataRW(0, &time_default, 1);
             printf("MSP430_return = %d\n", time_default);
             sleep(1 + time_default / 2);
