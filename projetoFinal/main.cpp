@@ -63,7 +63,7 @@ int main()
     Bot bot("792286575:AAG0puZ_3PvXAwh6ckXb5r4-cOfn56sgibU");
 
     InlineKeyboardMarkup::Ptr keyboard(new InlineKeyboardMarkup);
-    InlineKeyboardMarkup::Ptr keyboard2(new InlineKeyboardMarkup);
+    // InlineKeyboardMarkup::Ptr keyboard2(new InlineKeyboardMarkup);
     vector<InlineKeyboardButton::Ptr> row0;
     InlineKeyboardButton::Ptr checkButton(new InlineKeyboardButton);
     InlineKeyboardButton::Ptr checkButton2(new InlineKeyboardButton);
@@ -71,27 +71,27 @@ int main()
     InlineKeyboardButton::Ptr checkButton4(new InlineKeyboardButton);
 
     vector<InlineKeyboardButton::Ptr> row1;
-    vector<InlineKeyboardButton::Ptr> row2;
-    vector<InlineKeyboardButton::Ptr> row3;
+    // vector<InlineKeyboardButton::Ptr> row2;
+    // vector<InlineKeyboardButton::Ptr> row3;
 
-    checkButton->text = "pouco";
-    checkButton->callbackData = "nivel 1";
-    row0.push_back(checkButton);
-    keyboard->inlineKeyboard.push_back(row0);
-    checkButton2->text = "médio";
-    checkButton2->callbackData = "nivel 2";
-    row0.push_back(checkButton2);
-    keyboard->inlineKeyboard.push_back(row0);
+    // checkButton->text = "pouco";
+    // checkButton->callbackData = "nivel 1";
+    // row0.push_back(checkButton);
+    // keyboard->inlineKeyboard.push_back(row0);
+    // checkButton2->text = "médio";
+    // checkButton2->callbackData = "nivel 2";
+    // row0.push_back(checkButton2);
+    // keyboard->inlineKeyboard.push_back(row0);
 
-    checkButton3->text = "bastante";
-    checkButton3->callbackData = "nivel 3";
-    row0.push_back(checkButton3);
-    keyboard2->inlineKeyboard.push_back(row0);
+    // checkButton3->text = "bastante";
+    // checkButton3->callbackData = "nivel 3";
+    // row0.push_back(checkButton3);
+    // keyboard2->inlineKeyboard.push_back(row0);
 
-    checkButton4->text = "Cancelar";
-    checkButton4->callbackData = "cancelar";
-    row2.push_back(checkButton4);
-    keyboard2->inlineKeyboard.push_back(row2);
+    // checkButton4->text = "Cancelar";
+    // checkButton4->callbackData = "cancelar";
+    // row2.push_back(checkButton4);
+    // keyboard2->inlineKeyboard.push_back(row2);
 
     bot.getEvents().onCommand("start", [&bot](Message::Ptr message) {
         bot.getApi().sendMessage(message->chat->id, "Olá, vou te ajudar a manter seu pet alimentado. Use o comando /help para mais informações");
@@ -101,7 +101,7 @@ int main()
         bot.getApi().sendMessage(message->chat->id, "Alimentado");
     });
 
-    bot.getEvents().onCommand("alimentar", [&bot, &photoFilePath, &photoMimeType, &keyboard2](Message::Ptr message) {
+    bot.getEvents().onCommand("alimentar2", [&bot, &photoFilePath, &photoMimeType, &keyboard2](Message::Ptr message) {
         bot.getApi().sendMessage(message->chat->id, "Aguarde por favor!");
         bool existencia = verifyBowl(photoFilePath);
         if (!existencia)
