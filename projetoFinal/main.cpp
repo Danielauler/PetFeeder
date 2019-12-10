@@ -1,9 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <signal.h>
 #include <unistd.h>
 #include <thread>
-#include <csignal>
-#include <cstdio>
-#include <cstdlib>
 #include <tgbot/tgbot.h>
 #include <unistd.h>
 #include <wiringPi.h>
@@ -124,7 +123,7 @@ int main()
         }
         unsigned char user_input;
         // const unsigned char* user_input = reinterpret_cast<const unsigned char *>(message->text.c_str());
-        strcpy(user_input, message->text.c_str())
+        user_input = (unsigned char)atoi(message->text.c_str()));
         if ((atoi(message->text.c_str()) < 0) || (atoi(message->text.c_str()) > 5))
             puts("Valor invalido");
         else 
