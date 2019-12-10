@@ -146,7 +146,8 @@ int main()
         if (StringTools::startsWith(query->data, "alimentar"))
         {
             unsigned char user_input;
-            unsigned char value = query->data.substr(query->data.find(' '), query->data.find(' ') + 1);
+            unsigned char value;
+            value = query->data.substr(query->data.find(' '), query->data.find(' ') + 1);
             cout<<"value selected is: "<<value<<endl;
             user_input = (unsigned char)atoi(value);
             if ((atoi(value) < 0) || (atoi(value) > 5))
