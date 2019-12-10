@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
+#include <string>
 #include <signal.h>
-#include <unistd.h>
 #include <thread>
 #include <tgbot/tgbot.h>
 #include <unistd.h>
