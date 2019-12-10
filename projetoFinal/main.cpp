@@ -47,7 +47,6 @@ int main()
     const string photoMimeType = "image/jpeg";
 
     unsigned char user_input;
-    unsigned char time_default = (unsigned char)feed_default;
 
     if (wiringPiSetup() == -1)
     {
@@ -107,6 +106,7 @@ int main()
         bool existencia = verifyBowl(photoFilePath);
         if (!existencia)
         {
+            unsigned char time_default = (unsigned char)feed_default;
             wiringPiSPIDataRW(0, &time_default, 1);
             printf("MSP430_return = %d\n", time_default);
             sleep(1 + time_default / 2);
