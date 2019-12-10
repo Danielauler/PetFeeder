@@ -63,6 +63,7 @@ int main()
     Bot bot("792286575:AAG0puZ_3PvXAwh6ckXb5r4-cOfn56sgibU");
 
     InlineKeyboardMarkup::Ptr keyboard(new InlineKeyboardMarkup);
+    InlineKeyboardMarkup::Ptr keyboard2(new InlineKeyboardMarkup);
     vector<InlineKeyboardButton::Ptr> row0;
     InlineKeyboardButton::Ptr checkButton(new InlineKeyboardButton);
     InlineKeyboardButton::Ptr checkButton2(new InlineKeyboardButton);
@@ -70,34 +71,27 @@ int main()
     InlineKeyboardButton::Ptr checkButton4(new InlineKeyboardButton);
 
     vector<InlineKeyboardButton::Ptr> row1;
+    vector<InlineKeyboardButton::Ptr> row2;
+    vector<InlineKeyboardButton::Ptr> row3;
 
-    checkButton->text = "alimentar";
-    checkButton->callbackData = "alimentar";
+    checkButton->text = "pouco";
+    checkButton->callbackData = "alimentar 1";
     row0.push_back(checkButton);
     keyboard->inlineKeyboard.push_back(row0);
-    checkButton2->text = "agendar uma refeição";
-    checkButton2->callbackData = "agendar";
-    row1.push_back(checkButton2);
-    keyboard->inlineKeyboard.push_back(row1);
+    checkButton2->text = "médio";
+    checkButton2->callbackData = "alimentar 2";
+    row0.push_back(checkButton2);
+    keyboard->inlineKeyboard.push_back(row0);
 
-    // checkButton->text = "pouco";
-    // checkButton->callbackData = "alimentar 1";
-    // row0.push_back(checkButton);
-    // keyboard->inlineKeyboard.push_back(row0);
-    // // checkButton2->text = "médio";
-    // // checkButton2->callbackData = "alimentar 2";
-    // // row0.push_back(checkButton2);
-    // // keyboard->inlineKeyboard.push_back(row0);
+    checkButton3->text = "bastante";
+    checkButton3->callbackData = "alimentar3";
+    row0.push_back(checkButton3);
+    keyboard2->inlineKeyboard.push_back(row0);
 
-    // // checkButton3->text = "bastante";
-    // // checkButton3->callbackData = "alimentar3";
-    // // row0.push_back(checkButton3);
-    // // keyboard->inlineKeyboard.push_back(row0);
-
-    // checkButton4->text = "Cancelar";
-    // checkButton4->callbackData = "cancelar";
-    // row0.push_back(checkButton4);
-    // keyboard->inlineKeyboard.push_back(row1);
+    checkButton4->text = "Cancelar";
+    checkButton4->callbackData = "cancelar";
+    row0.push_back(checkButton4);
+    keyboard2->inlineKeyboard.push_back(row2);
 
     bot.getEvents().onCommand("start", [&bot](Message::Ptr message) {
         bot.getApi().sendMessage(message->chat->id, "Olá, vou te ajudar a manter seu pet alimentado. Use o comando /help para mais informações");
@@ -109,7 +103,7 @@ int main()
         bot.getApi().sendMessage(message->chat->id, "Alimentado");
     });
 
-    bot.getEvents().onCommand("alimentar", [&bot, &photoFilePath, &photoMimeType, &keyboard](Message::Ptr message) {
+    bot.getEvents().onCommand("alimentar", [&bot, &photoFilePath, &photoMimeType, &keyboard2](Message::Ptr message) {
         cout << message << endl;
         bot.getApi().sendMessage(message->chat->id, "Aguarde por favor!");
         bool existencia = verifyBowl(photoFilePath);
@@ -125,30 +119,29 @@ int main()
         else
         {
             string response = "Se quiser que eu complete o pote, basta me dizer o quão cheio ele já está. Ou pode cancelar!";
-            // bot.getApi().sendPhoto(message->chat->id, InputFile::fromFile(photoFilePath, photoMimeType), "A tigela ainda está cheia!");
-            bot.getApi().sendMessage(message->chat->id, response, false, 0, keyboard, "Markdown");
+            bot.getApi().sendPhoto(message->chat->id, InputFile::fromFile(photoFilePath, photoMimeType), "A tigela ainda está cheia!", false, 0, keyboard2, "Markdown");
         }
     });
 
-    bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
-        printf("User wrote %s\n", message->text.c_str());
-        if (StringTools::startsWith(message->text, "/start"))
-        {
-            return;
-        }
-        unsigned char user_input;
-        user_input = (unsigned char)atoi(message->text.c_str());
-        if ((atoi(message->text.c_str()) < 0) || (atoi(message->text.c_str()) > 5))
-            puts("Valor invalido");
-        else
-        {
-            wiringPiSPIDataRW(0, &user_input, 1);
-            printf("MSP430_return = %d\n", user_input);
-            sleep(1 + user_input / 2);
-        }
-        puts("");
-        bot.getApi().sendMessage(message->chat->id, "Your message is: " + message->text);
-    });
+//    bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
+//         printf("User wrote %s\n", message->text.c_str());
+//         if (StringTools::startsWith(message->text, "/start"))
+//         {
+//             return;
+//         }
+//         unsigned char user_input;
+//         user_input = (unsigned char)atoi(message->text.c_str());
+//         if ((atoi(message->text.c_str()) < 0) || (atoi(message->text.c_str()) > 5))
+//             puts("Valor invalido");
+//         else
+//         {
+//             wiringPiSPIDataRW(0, &user_input, 1);
+//              printf("MSP430_return = %d\n", user_input);
+//             sleep(1 + user_input / 2);
+//         }
+//         puts("");
+//         bot.getApi().sendMessage(message->chat->id, "Your message is: " + message->text);
+//     });
 
     bot.getEvents().onCallbackQuery([&bot](CallbackQuery::Ptr query) {
         if (StringTools::startsWith(query->data, "alimentar"))
