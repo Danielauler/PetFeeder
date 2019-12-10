@@ -22,7 +22,7 @@ void takePic()
 {
     cout << "Tirando foto" << endl;
 
-    system("fswebcam 320x240 foto_img.jpg");
+    system("fswebcam -r 320x240 foto_img.jpg");
 }
 
 bool verifyBowl(string photoFilePath)
