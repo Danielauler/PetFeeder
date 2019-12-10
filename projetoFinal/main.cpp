@@ -90,7 +90,7 @@ int main()
 
     checkButton4->text = "Cancelar";
     checkButton4->callbackData = "cancelar";
-    row0.push_back(checkButton4);
+    row2.push_back(checkButton4);
     keyboard2->inlineKeyboard.push_back(row2);
 
     bot.getEvents().onCommand("start", [&bot](Message::Ptr message) {
@@ -119,7 +119,7 @@ int main()
         else
         {
             string response = "Se quiser que eu complete o pote, basta me dizer o quão cheio ele já está. Ou pode cancelar!";
-            bot.getApi().sendPhoto(message->chat->id, InputFile::fromFile(photoFilePath, photoMimeType), "A tigela ainda está cheia!", false, 0, keyboard2, "Markdown");
+            bot.getApi().sendPhoto(message->chat->id, InputFile::fromFile(photoFilePath, photoMimeType), "A tigela ainda está cheia!", false, 0, keyboard2);
         }
     });
 
