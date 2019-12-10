@@ -123,7 +123,7 @@ int main()
         }
         unsigned char user_input;
         // const unsigned char* user_input = reinterpret_cast<const unsigned char *>(message->text.c_str());
-        user_input = (unsigned char)atoi(message->text.c_str()));
+        user_input = (unsigned char)atoi(message->text.c_str());
         if ((atoi(message->text.c_str()) < 0) || (atoi(message->text.c_str()) > 5))
             puts("Valor invalido");
         else 
