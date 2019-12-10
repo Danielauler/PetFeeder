@@ -29,7 +29,7 @@ bool verifyBowl(string photoFilePath)
     cout << "Verificando tigela" << endl;
 
     bool haveFood;
-    system("rm -rf foto_img.jpg")
+    system("rm -rf foto_img.jpg");
     thread takePhoto(takePic);
     takePhoto.join();
 
