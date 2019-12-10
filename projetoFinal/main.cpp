@@ -116,7 +116,7 @@ int main()
         else
         {
             string response = "Se quiser que eu complete o pote, basta me dizer o quão cheio ele já está. Ou pode cancelar!";
-            bot.getApi().sendPhoto(message->chat->id, InputFile::fromFile(photoFilePath, photoMimeType), "A tigela ainda está cheia!");
+            // bot.getApi().sendPhoto(message->chat->id, InputFile::fromFile(photoFilePath, photoMimeType), "A tigela ainda está cheia!");
             bot.getApi().sendMessage(message->chat->id, response, false, 0, keyboard, "Markdown");
         }
     });
