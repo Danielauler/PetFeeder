@@ -71,24 +71,33 @@ int main()
 
     vector<InlineKeyboardButton::Ptr> row1;
 
-    checkButton->text = "pouco";
-    checkButton->callbackData = "alimentar 1";
+    checkButton->text = "alimentar";
+    checkButton->callbackData = "alimentar";
     row0.push_back(checkButton);
     keyboard->inlineKeyboard.push_back(row0);
-    // checkButton2->text = "médio";
-    // checkButton2->callbackData = "alimentar 2";
-    // row0.push_back(checkButton2);
-    // keyboard->inlineKeyboard.push_back(row0);
-
-    // checkButton3->text = "bastante";
-    // checkButton3->callbackData = "alimentar3";
-    // row0.push_back(checkButton3);
-    // keyboard->inlineKeyboard.push_back(row0);
-
-    checkButton4->text = "Cancelar";
-    checkButton4->callbackData = "cancelar";
-    row0.push_back(checkButton4);
+    checkButton2->text = "agendar uma refeição";
+    checkButton2->callbackData = "agendar";
+    row1.push_back(checkButton2);
     keyboard->inlineKeyboard.push_back(row1);
+
+    // checkButton->text = "pouco";
+    // checkButton->callbackData = "alimentar 1";
+    // row0.push_back(checkButton);
+    // keyboard->inlineKeyboard.push_back(row0);
+    // // checkButton2->text = "médio";
+    // // checkButton2->callbackData = "alimentar 2";
+    // // row0.push_back(checkButton2);
+    // // keyboard->inlineKeyboard.push_back(row0);
+
+    // // checkButton3->text = "bastante";
+    // // checkButton3->callbackData = "alimentar3";
+    // // row0.push_back(checkButton3);
+    // // keyboard->inlineKeyboard.push_back(row0);
+
+    // checkButton4->text = "Cancelar";
+    // checkButton4->callbackData = "cancelar";
+    // row0.push_back(checkButton4);
+    // keyboard->inlineKeyboard.push_back(row1);
 
     bot.getEvents().onCommand("start", [&bot](Message::Ptr message) {
         bot.getApi().sendMessage(message->chat->id, "Olá, vou te ajudar a manter seu pet alimentado. Use o comando /help para mais informações");
