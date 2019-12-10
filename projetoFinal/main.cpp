@@ -15,6 +15,7 @@ using namespace std;
 using namespace TgBot;
 
 int spi_fd;
+int feed_default;
 
 void takePic()
 {
@@ -44,6 +45,10 @@ int main()
 {
     const string photoFilePath = "foto_img.jpg";
     const string photoMimeType = "image/jpeg";
+
+    unsigned char user_input;
+    unsigned char time_default = (unsigned char)feed_default;
+
     if (wiringPiSetup() == -1)
     {
         puts("Erro em wiringPiSetup().");
@@ -59,28 +64,32 @@ int main()
     Bot bot("792286575:AAG0puZ_3PvXAwh6ckXb5r4-cOfn56sgibU");
 
     InlineKeyboardMarkup::Ptr keyboard(new InlineKeyboardMarkup);
-    InlineKeyboardMarkup::Ptr keyboard2(new InlineKeyboardMarkup);
     vector<InlineKeyboardButton::Ptr> row0;
     InlineKeyboardButton::Ptr checkButton(new InlineKeyboardButton);
     InlineKeyboardButton::Ptr checkButton2(new InlineKeyboardButton);
     InlineKeyboardButton::Ptr checkButton3(new InlineKeyboardButton);
+    InlineKeyboardButton::Ptr checkButton4(new InlineKeyboardButton);
 
     vector<InlineKeyboardButton::Ptr> row1;
-    vector<InlineKeyboardButton::Ptr> row2;
 
-    checkButton->text = "alimentar";
-    checkButton->callbackData = "alimentar";
+    checkButton->text = "pouco";
+    checkButton->callbackData = "alimentar 1";
     row0.push_back(checkButton);
     keyboard->inlineKeyboard.push_back(row0);
-    checkButton2->text = "agendar uma refeição";
-    checkButton2->callbackData = "agendar";
-    row1.push_back(checkButton2);
-    keyboard->inlineKeyboard.push_back(row1);
+    checkButton2->text = "médio";
+    checkButton2->callbackData = "alimentar 2";
+    row0.push_back(checkButton2);
+    keyboard->inlineKeyboard.push_back(row0);
 
-    checkButton3->text = "Alimentar sem verificar";
-    checkButton3->callbackData = "semVerificarAlimentar";
-    row2.push_back(checkButton3);
-    keyboard->inlineKeyboard.push_back(row2);
+    checkButton3->text = "bastante";
+    checkButton3->callbackData = "alimentar3";
+    row0.push_back(checkButton3);
+    keyboard->inlineKeyboard.push_back(row0);
+
+    checkButton4->text = "Cancelar";
+    checkButton4->callbackData = "cancelar";
+    row0.push_back(checkButton4);
+    keyboard->inlineKeyboard.push_back(row1);
 
     bot.getEvents().onCommand("start", [&bot](Message::Ptr message) {
         bot.getApi().sendMessage(message->chat->id, "Olá, vou te ajudar a manter seu pet alimentado. Use o comando /help para mais informações");
@@ -92,26 +101,24 @@ int main()
         bot.getApi().sendMessage(message->chat->id, "Alimentado");
     });
 
-    bot.getEvents().onCommand("semVerificarAlimentar", [&bot](Message::Ptr message) {
-        // thread feeder(feederFunction, 2, 40);
-        // feeder.join();
-        bot.getApi().sendMessage(message->chat->id, "Alimentado");
-    });
-
-    bot.getEvents().onCommand("alimentar", [&bot, &photoFilePath, &photoMimeType](Message::Ptr message) {
+    bot.getEvents().onCommand("alimentar", [&bot, &photoFilePath, &photoMimeType, &keyboard](Message::Ptr message) {
         cout << message << endl;
         bot.getApi().sendMessage(message->chat->id, "Aguarde por favor!");
         bool existencia = verifyBowl(photoFilePath);
         if (!existencia)
         {
-            // thread feeder(feederFunction, 2, 40);
-            // feeder.join();
+            wiringPiSPIDataRW(0, &time_default, 1);
+            printf("MSP430_return = %d\n", time_default);
+            sleep(1 + time_default / 2);
             string response = "Ok, alimentado";
             bot.getApi().sendMessage(message->chat->id, response);
         }
         else
         {
+            string response = "Se quiser que eu complete o pote, basta me dizer o quão cheio ele já está. Ou pode cancelar!";
             bot.getApi().sendPhoto(message->chat->id, InputFile::fromFile(photoFilePath, photoMimeType), "A tigela ainda está cheia!");
+            sleep(1);
+            bot.getApi().sendMessage(message->chat->id, response, false, 0, keyboard, "Markdown");
         }
     });
 
@@ -121,39 +128,36 @@ int main()
         {
             return;
         }
-        unsigned char user_input;
-        // const unsigned char* user_input = reinterpret_cast<const unsigned char *>(message->text.c_str());
         user_input = (unsigned char)atoi(message->text.c_str());
         if ((atoi(message->text.c_str()) < 0) || (atoi(message->text.c_str()) > 5))
             puts("Valor invalido");
-        else 
-		{
-			wiringPiSPIDataRW(0, &user_input, 1);
-			printf("MSP430_return = %d\n", user_input);
-			sleep(1+user_input/2);
-		}
-		puts("");
+        else
+        {
+            wiringPiSPIDataRW(0, &user_input, 1);
+            printf("MSP430_return = %d\n", user_input);
+            sleep(1 + user_input / 2);
+        }
+        puts("");
         bot.getApi().sendMessage(message->chat->id, "Your message is: " + message->text);
     });
 
     bot.getEvents().onCallbackQuery([&bot](CallbackQuery::Ptr query) {
         if (StringTools::startsWith(query->data, "alimentar"))
         {
-            const string photoFilePath = "foto_img.jpg";
-            const string photoMimeType = "image/jpeg";
-
-            bool existencia = verifyBowl(photoFilePath);
-            if (!existencia)
-            {
-                // thread feeder(feederFunction, 2, 40);
-                // feeder.join();
-                string response = "Ok, alimentado";
-                bot.getApi().sendMessage(query->message->chat->id, response);
-            }
+            string value = query->data.c_str().substr(query->data.c_str().find(' '), query->data.c_str().find(' ') + 1);
+            cout<<"value selected is: "<<value<<endl;
+            user_input = (unsigned char)atoi(value);
+            if ((atoi(value) < 0) || (atoi(value) > 5))
+                puts("Valor invalido");
+                bot.getApi().sendMessage(query->message->chat->id, "Valor invalido");
             else
             {
-                bot.getApi().sendPhoto(query->message->chat->id, InputFile::fromFile(photoFilePath, photoMimeType), "A tigela ainda está cheia!");
+                wiringPiSPIDataRW(0, &user_input, 1);
+                printf("MSP430_return = %d\n", user_input);
+                sleep(1 + user_input / 2);
             }
+            puts("");
+            bot.getApi().sendMessage(query->message->chat->id, "Ok, alimentado!");
         }
     });
 
