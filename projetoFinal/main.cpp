@@ -149,7 +149,7 @@ int main()
             unsigned char value = query->data.back();
             cout<<"value selected is: "<<value<<endl;
             // user_input = (unsigned char)atoi(value);
-            if ((atoi(value) < 0) || (atoi(value) > 5))
+            if ((value < 0) || (value > 5))
                 puts("Valor invalido");
                 bot.getApi().sendMessage(query->message->chat->id, "Valor invalido");
             else
