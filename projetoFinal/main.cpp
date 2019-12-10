@@ -46,7 +46,6 @@ int main()
     const string photoFilePath = "foto_img.jpg";
     const string photoMimeType = "image/jpeg";
 
-    unsigned char user_input;
 
     if (wiringPiSetup() == -1)
     {
@@ -128,6 +127,7 @@ int main()
         {
             return;
         }
+        unsigned char user_input;
         user_input = (unsigned char)atoi(message->text.c_str());
         if ((atoi(message->text.c_str()) < 0) || (atoi(message->text.c_str()) > 5))
             puts("Valor invalido");
@@ -144,6 +144,7 @@ int main()
     bot.getEvents().onCallbackQuery([&bot](CallbackQuery::Ptr query) {
         if (StringTools::startsWith(query->data, "alimentar"))
         {
+            unsigned char user_input;
             string value = query->data.c_str().substr(query->data.c_str().find(' '), query->data.c_str().find(' ') + 1);
             cout<<"value selected is: "<<value<<endl;
             user_input = (unsigned char)atoi(value);
