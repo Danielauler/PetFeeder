@@ -75,16 +75,16 @@ int main()
     vector<InlineKeyboardButton::Ptr> row3;
 
     checkButton->text = "pouco";
-    checkButton->callbackData = "alimentar 1";
+    checkButton->callbackData = "nivel 1";
     row0.push_back(checkButton);
     keyboard->inlineKeyboard.push_back(row0);
     checkButton2->text = "médio";
-    checkButton2->callbackData = "alimentar 2";
+    checkButton2->callbackData = "nivel 2";
     row0.push_back(checkButton2);
     keyboard->inlineKeyboard.push_back(row0);
 
     checkButton3->text = "bastante";
-    checkButton3->callbackData = "alimentar3";
+    checkButton3->callbackData = "nivel 3";
     row0.push_back(checkButton3);
     keyboard2->inlineKeyboard.push_back(row0);
 
@@ -98,8 +98,6 @@ int main()
     });
 
     bot.getEvents().onCommand("semVerificarAlimentar", [&bot](Message::Ptr message) {
-        // thread feeder(feederFunction, 2, 40);
-        // feeder.join();
         bot.getApi().sendMessage(message->chat->id, "Alimentado");
     });
 
@@ -124,7 +122,7 @@ int main()
     });
 
     bot.getEvents().onCallbackQuery([&bot](CallbackQuery::Ptr query) {
-        if (StringTools::startsWith(query->data, "alimentar"))
+        if (StringTools::startsWith(query->data, "nivel"))
         {
             unsigned char value = query->data.back();
             cout<<"value selected is: "<<value<<endl;
