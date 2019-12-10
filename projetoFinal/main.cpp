@@ -119,29 +119,10 @@ int main()
         else
         {
             string response = "Se quiser que eu complete o pote, basta me dizer o quão cheio ele já está. Ou pode cancelar!";
-            bot.getApi().sendPhoto(message->chat->id, InputFile::fromFile(photoFilePath, photoMimeType), "A tigela ainda está cheia!", false, 0, keyboard2);
+            bot.getApi().sendPhoto(message->chat->id, InputFile::fromFile(photoFilePath, photoMimeType), "A tigela ainda está cheia!");
+            bot.getApi().sendMessage(message->chat->id, response);
         }
     });
-
-//    bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
-//         printf("User wrote %s\n", message->text.c_str());
-//         if (StringTools::startsWith(message->text, "/start"))
-//         {
-//             return;
-//         }
-//         unsigned char user_input;
-//         user_input = (unsigned char)atoi(message->text.c_str());
-//         if ((atoi(message->text.c_str()) < 0) || (atoi(message->text.c_str()) > 5))
-//             puts("Valor invalido");
-//         else
-//         {
-//             wiringPiSPIDataRW(0, &user_input, 1);
-//              printf("MSP430_return = %d\n", user_input);
-//             sleep(1 + user_input / 2);
-//         }
-//         puts("");
-//         bot.getApi().sendMessage(message->chat->id, "Your message is: " + message->text);
-//     });
 
     bot.getEvents().onCallbackQuery([&bot](CallbackQuery::Ptr query) {
         if (StringTools::startsWith(query->data, "alimentar"))
