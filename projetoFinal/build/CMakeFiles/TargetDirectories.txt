@@ -1,3 +1,0 @@
-/home/pi/Workspace/micro/projetoFinal/build/CMakeFiles/rebuild_cache.dir
-/home/pi/Workspace/micro/projetoFinal/build/CMakeFiles/ComedouroBot.dir
-/home/pi/Workspace/micro/projetoFinal/build/CMakeFiles/edit_cache.dir
