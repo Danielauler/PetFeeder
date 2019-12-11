@@ -10,8 +10,6 @@
 #include <wiringPiSPI.h>
 #include "scanBowl.h"
 
-#define SERVO 1
-
 using namespace std;
 using namespace TgBot;
 
