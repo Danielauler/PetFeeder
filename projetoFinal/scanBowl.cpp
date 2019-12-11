@@ -1,6 +1,7 @@
 #include "scanBowl.h"
 
 using namespace cv;
+using namespace std;
 
 bool verifyFood(char *filename){
 	
@@ -50,7 +51,8 @@ CV_TERMCRIT_EPS, 10000, 0.0001), tentativas, KMEANS_PP_CENTERS, centros);
 			}
 		}
 	}
-	
+	cout<<pixeis_racao<<endl;
+	cout<<pixeis_tigela<<endl;
 	if ((float)((1.0 * pixeis_racao) / (1.0 * pixeis_tigela) > 0.2)){ // esta fazendo a conversao 
                                                           // para float
 		existe_racao = true;
