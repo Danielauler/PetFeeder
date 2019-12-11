@@ -63,7 +63,7 @@ int main()
     Bot bot("792286575:AAG0puZ_3PvXAwh6ckXb5r4-cOfn56sgibU");
 
     InlineKeyboardMarkup::Ptr keyboard(new InlineKeyboardMarkup);
-    // InlineKeyboardMarkup::Ptr keyboard2(new InlineKeyboardMarkup);
+    InlineKeyboardMarkup::Ptr keyboard2(new InlineKeyboardMarkup);
     vector<InlineKeyboardButton::Ptr> row0;
     InlineKeyboardButton::Ptr checkButton(new InlineKeyboardButton);
     InlineKeyboardButton::Ptr checkButton2(new InlineKeyboardButton);
