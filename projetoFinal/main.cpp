@@ -71,27 +71,27 @@ int main()
     InlineKeyboardButton::Ptr checkButton4(new InlineKeyboardButton);
 
     vector<InlineKeyboardButton::Ptr> row1;
-    // vector<InlineKeyboardButton::Ptr> row2;
-    // vector<InlineKeyboardButton::Ptr> row3;
+    vector<InlineKeyboardButton::Ptr> row2;
+    vector<InlineKeyboardButton::Ptr> row3;
 
-    // checkButton->text = "pouco";
-    // checkButton->callbackData = "nivel 1";
-    // row0.push_back(checkButton);
-    // keyboard->inlineKeyboard.push_back(row0);
-    // checkButton2->text = "médio";
-    // checkButton2->callbackData = "nivel 2";
-    // row0.push_back(checkButton2);
-    // keyboard->inlineKeyboard.push_back(row0);
+    checkButton->text = "pouco";
+    checkButton->callbackData = "nivel 1";
+    row0.push_back(checkButton);
+    keyboard->inlineKeyboard.push_back(row0);
+    checkButton2->text = "médio";
+    checkButton2->callbackData = "nivel 2";
+    row0.push_back(checkButton2);
+    keyboard->inlineKeyboard.push_back(row0);
 
-    // checkButton3->text = "bastante";
-    // checkButton3->callbackData = "nivel 3";
-    // row0.push_back(checkButton3);
-    // keyboard2->inlineKeyboard.push_back(row0);
+    checkButton3->text = "bastante";
+    checkButton3->callbackData = "nivel 3";
+    row0.push_back(checkButton3);
+    keyboard2->inlineKeyboard.push_back(row0);
 
-    // checkButton4->text = "Cancelar";
-    // checkButton4->callbackData = "cancelar";
-    // row2.push_back(checkButton4);
-    // keyboard2->inlineKeyboard.push_back(row2);
+    checkButton4->text = "Cancelar";
+    checkButton4->callbackData = "cancelar";
+    row1.push_back(checkButton4);
+    keyboard2->inlineKeyboard.push_back(row1);
 
     bot.getEvents().onCommand("start", [&bot](Message::Ptr message) {
         bot.getApi().sendMessage(message->chat->id, "Olá, vou te ajudar a manter seu pet alimentado. Use o comando /help para mais informações");
@@ -101,7 +101,7 @@ int main()
         bot.getApi().sendMessage(message->chat->id, "Alimentado");
     });
 
-    bot.getEvents().onCommand("alimentar2", [&bot, &photoFilePath, &photoMimeType](Message::Ptr message) {
+    bot.getEvents().onCommand("alimentar", [&bot, &photoFilePath, &photoMimeType. &keyboard](Message::Ptr message) {
         bot.getApi().sendMessage(message->chat->id, "Aguarde por favor!");
         bool existencia = verifyBowl(photoFilePath);
         if (!existencia)
@@ -117,7 +117,7 @@ int main()
         {
             string response = "Se quiser que eu complete o pote, basta me dizer o quão cheio ele já está. Ou pode cancelar!";
             bot.getApi().sendPhoto(message->chat->id, InputFile::fromFile(photoFilePath, photoMimeType), "A tigela ainda está cheia!");
-            bot.getApi().sendMessage(message->chat->id, response);
+            bot.getApi().sendMessage(message->chat->id, response, false, 0, keyboard, "Markdown");
         }
     });
 
