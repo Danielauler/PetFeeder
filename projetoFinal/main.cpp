@@ -101,7 +101,7 @@ int main()
         bot.getApi().sendMessage(message->chat->id, "Alimentado");
     });
 
-    bot.getEvents().onCommand("alimentar2", [&bot, &photoFilePath, &photoMimeType, &keyboard2](Message::Ptr message) {
+    bot.getEvents().onCommand("alimentar2", [&bot, &photoFilePath, &photoMimeType](Message::Ptr message) {
         bot.getApi().sendMessage(message->chat->id, "Aguarde por favor!");
         bool existencia = verifyBowl(photoFilePath);
         if (!existencia)
