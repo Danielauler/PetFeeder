@@ -97,7 +97,12 @@ int main()
     });
 
     bot.getEvents().onCommand("semVerificarAlimentar", [&bot](Message::Ptr message) {
-        bot.getApi().sendMessage(message->chat->id, "Alimentado");
+        unsigned char time_default = 4;
+        wiringPiSPIDataRW(0, &time_default, 1);
+        printf("MSP430_return = %d\n", time_default);
+        sleep(1 + time_default / 2);
+        string response = "Ok, alimentado";
+        bot.getApi().sendMessage(message->chat->id, response);
     });
 
     bot.getEvents().onCommand("alimentar", [&bot, &photoFilePath, &photoMimeType, &keyboard](Message::Ptr message) {
