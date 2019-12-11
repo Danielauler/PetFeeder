@@ -47,7 +47,6 @@ int main()
     const string photoFilePath = "foto_img.jpg";
     const string photoMimeType = "image/jpeg";
 
-
     if (wiringPiSetup() == -1)
     {
         puts("Erro em wiringPiSetup().");
@@ -85,13 +84,13 @@ int main()
 
     checkButton3->text = "bastante";
     checkButton3->callbackData = "nivel 3";
-    row0.push_back(checkButton3);
-    keyboard2->inlineKeyboard.push_back(row0);
+    row1.push_back(checkButton3);
+    keyboard->inlineKeyboard.push_back(row1);
 
     checkButton4->text = "Cancelar";
     checkButton4->callbackData = "cancelar";
     row1.push_back(checkButton4);
-    keyboard2->inlineKeyboard.push_back(row1);
+    keyboard->inlineKeyboard.push_back(row1);
 
     bot.getEvents().onCommand("start", [&bot](Message::Ptr message) {
         bot.getApi().sendMessage(message->chat->id, "Olá, vou te ajudar a manter seu pet alimentado. Use o comando /help para mais informações");
@@ -125,7 +124,7 @@ int main()
         if (StringTools::startsWith(query->data, "nivel"))
         {
             unsigned char value = query->data.back();
-            cout<<"value selected is: "<<value<<endl;
+            cout << "value selected is: " << value << endl;
             if ((value < 0) || (value > 5))
             {
                 puts("Valor invalido");
@@ -136,9 +135,9 @@ int main()
                 wiringPiSPIDataRW(0, &value, 1);
                 printf("MSP430_return = %d\n", value);
                 sleep(1 + value / 2);
+                bot.getApi().sendMessage(query->message->chat->id, "Ok, alimentado!");
             }
             puts("");
-            bot.getApi().sendMessage(query->message->chat->id, "Ok, alimentado!");
         }
     });
 
